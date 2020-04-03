@@ -11,6 +11,7 @@ namespace Corona.Controllers
 {
     public class HomeController : Controller
     {
+        //commit 1
         public string GetStr()
         {
             string json = "[]";

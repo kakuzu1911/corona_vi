@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/bootstrap-4.0.0-dist/css/bootstrap.min.css?v=1" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.js?v=1"></script>
+    <style>
+        .bg-country{
+            background-position:left center;
+            background-repeat:no-repeat;
+            background-size:30px;
+            padding-left:40px;
+        }
+    </style>
+</head>
+<body>
+    @RenderBody()
+   <script>
+       $("#ddl_order").change(function () {
+           window.location.href = window.location.pathname + "?_or=" + $(this).val();
+       });
+       $(document).ready(function () {
+           $("#ddl_order").val($("#_ld").val());
+       });
+   </script>
+</body>
+</html>

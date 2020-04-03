@@ -1,0 +1,52 @@
+﻿<div class="container">
+    <h1 class="text-center">Tình hình dịch bệnh virus corona</h1>
+   
+        <div class="text-center form-group">
+            <select class="form-control d-inline-block" id="ddl_order" name="ddl_order" style="max-width:300px">
+                <option value="0">Mặc định</option>
+                <option value="1">Số ca nhiểm mới</option>
+                <option value="2">Số ca tử vong</option>
+                <option value="3">Tổng số ca</option>
+            </select>
+        </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped  table-dark table-borderless table-responsive-lg">
+            <thead class="thead-dark">
+                <tr>
+                    <th>#</th>
+                    <th class="text-nowrap">Quốc gia</th>
+                    <th class="text-nowrap">Số ca nhiễm hôm nay</th>
+                    <th class="text-nowrap">Tổng số ca</th>
+                    <th class="text-nowrap">Số ca tử vong</th>
+                    <th class="text-nowrap">Số ca chữa khỏi</th>
+                    <th class="text-nowrap">Tỷ lệ nhiễm / 1 triệu dân</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if (Model != null)
+                    {
+                        int i = 1;
+                        foreach (var it in Model)
+                        {
+                            <tr>
+                                <td>@i.ToString()</td>
+                                <td>
+                                    <div class="bg-country" style="background-image:url('@(it.countryInfo.flag)')">@(it.country)</div>
+                                </td>
+                                <td>@Html.Raw(it.todayCases == 0 ? "" : "<span class=\"badge badge-warning\">+" + it.todayCases + "</span>")</td>
+                                <td><b class="text-warning">@it.cases</b></td>
+                                <td>@Html.Raw(it.deaths == 0 ? "" : "<span class=\"badge badge-danger\">" + it.deaths + "</span>")</td>
+                                <td>@Html.Raw(it.deaths == 0 ? "" : "<span class=\"badge badge-success\">" + it.recovered + "</span>")</td>
+                                <td>@Html.Raw(it.casesPerOneMillion == 0 ? "" : "<span class=\"text text-warning\">" + it.casesPerOneMillion + "</span>")</td>
+                            </tr>
+                            i++;
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    </div>
+<input type="hidden" id="_ld" value="@(ViewBag.or)" />

@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/bootstrap-4.0.0-dist/css/bootstrap.min.css?v=1" rel="stylesheet" />
+    <link href="~/Content/leaflet/leaflet.css?v=1" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.js?v=1"></script>
+    <style>
+        .bg-country{
+            background-position:left center;
+            background-repeat:no-repeat;
+            background-size:30px;
+            padding-left:40px;
+        }
+        #mapid { height: 390px; }
+    </style>
+</head>
+<body>
+    <div id="resc"></div>
+    @RenderBody()
+    <script src="~/Content/leaflet/leaflet.js?v=1"></script>
+   <script>
+       $("#ddl_order").change(function () {
+           window.location.href = window.location.pathname + "?_or=" + $(this).val();
+       });
+       var locations = [];
+       $(document).ready(function () {
+           $("#ddl_order").val($("#_ld").val());
+
+           var mymap = L.map('mapid').setView([51.505, -0.09], 3);
+
+           L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+               maxZoom: 18,
+               attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+                   '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+                   'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+               id: 'mapbox/streets-v11',
+               tileSize: 512,
+               zoomOffset: -1
+           }).addTo(mymap);
+
+           $.getJSON('/Home/ReturnMap', function (data) {
+               $.each(data, function (key, data) {
+                   
+
+                   L.marker([data.lat, data._long]).addTo(mymap).bindPopup("<b>"+data.country+"</b>");
+
+               });
+           });
+
+           //render map
+
+          
+
+           //end
+
+       });
+       
+     
+
+      
+
+      
+
+   </script>
+   
+</body>
+</html>
